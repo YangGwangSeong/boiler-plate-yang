@@ -1,17 +1,17 @@
 const express = require('express')
 const app = express()
 const port = 3001
-const config = require('./config/key');
-//const bodyParser = require('body-parser'); Express 4.16+부터 필요가 없어진듯?
+const config = require('./server/config/key');
+//const bodyParser = require('body-parser'); //Express 4.16+부터 필요가 없어진듯?
 const cookieParser = require('cookie-parser');
 
-const { auth } = require("./middleware/auth");
-const { User } = require("./models/User");//User모델 가져오기
+const { auth } = require("./server/middleware/auth");
+const { User } = require("./server/models/User");//User모델 가져오기
 
 //application/x-www-form-urlencoded
 //app.use(bodyParser.urlencoded({extended: true}));Express 4.16+부터 필요가 없어진듯?
 app.use(express.urlencoded()); //Parse URL-encoded bodies
-//app.use(bodyParser.json());Express 4.16+부터 필요가 없어진듯?
+//app.use(bodyParser.json()); //Express 4.16+부터 필요가 없어진듯?
 app.use(express.json()); //Used to parse JSON bodies
 app.use(cookieParser());
 
@@ -27,6 +27,9 @@ mongoose.connect(config.mongoURI, {
 //mongodb+srv://admin:<password>@boilerplate.lje9s.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 //admin//rhkdtjd83**
 app.get('/', (req, res) => res.send('Hello World2!'))
+app.get('/api/hello', (req, res) => {
+  res.send("heelo");
+});
 app.post('/api/users/register', (req, res) => {
 
   // 회원 가입 할때 필요한 정보들을 client에서 가져오면
